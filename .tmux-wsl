@@ -1,0 +1,1 @@
+bind-key -n C-y run "tmux save-buffer - | clip.exe"
