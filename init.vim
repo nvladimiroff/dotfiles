@@ -34,3 +34,5 @@ set shiftwidth=2
 " On pressing tab, insert 4 spaces
 set expandtab
 
+" This maybe is needed in macos?
+set ttimeoutlen=50
