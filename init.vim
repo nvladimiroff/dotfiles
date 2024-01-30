@@ -13,3 +13,4 @@ set expandtab
 " This maybe is needed in macos?
 set ttimeoutlen=50
 
+lua require('plugins')

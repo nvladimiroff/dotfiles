@@ -1,0 +1,32 @@
+[init]
+	defaultBranch = live
+[core]
+	autocrlf = input
+	editor = vim
+	filemode = false
+[merge]
+	tool = vscode
+  ff = only
+[fetch]
+  prune = true
+[rebase]
+  autosquash = true
+[include]
+  path = ~/.gitconfig.local
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+[diff]
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[credential]
+	helper = store
+[alias]
+  branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
+  fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
+  fp = push --force-with-lease
+  l = git log --oneline -n 10
+[commit]
+  gpgsign = true
+[gpg]
+	program = gpg
