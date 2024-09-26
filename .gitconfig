@@ -26,10 +26,17 @@
   fixup = !bash -c 'git log -n 50 --pretty=format:\"%h %s\" --no-merges | fzf | cut -c -7 | xargs -o git commit \"$@\" --fixup' -
   fp = push --force-with-lease
   l = log --oneline -n 10
+  b = blame -w -C -C -C
 [commit]
   gpgsign = true
 [gpg]
   program = gpg
 [push]
-  autoSetupRemote = true
-
+	autoSetupRemote = true
+[rerere]
+	enabled = true
+	autoUpdate = true
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
