@@ -4,10 +4,16 @@ blur = true
 option_as_alt = "Both"
 
 [font]
-size = 12
+size = 14
+normal = { family = "Monaco Nerd Font Mono", style = "Regular" }
+
 
 [keyboard]
 bindings = [
   { key = "Right", mods = "Alt", chars = "\u001BF" },
   { key = "Left",  mods = "Alt", chars = "\u001BB" },
 ]
+
+[selection]
+save_to_clipboard = true
+
