@@ -27,10 +27,10 @@
   fp = push --force-with-lease
   l = log --oneline -n 10
   b = blame -w -C -C -C
-[commit]
-  gpgsign = true
-[gpg]
-  program = gpg
+# [commit]
+#   gpgsign = true
+# [gpg]
+#   program = gpg
 [push]
 	autoSetupRemote = true
 [rerere]
