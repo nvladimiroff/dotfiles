@@ -3,9 +3,6 @@ vim.g.mapleader = ','
 -- Use the system clipboard
 vim.opt.clipboard:append { 'unnamed', 'unnamedplus' }
 
--- Double escape to clear searches
-vim.keymap.set('n', '<Esc><Esc>', '<Esc>:nohlsearch<CR><Esc>', {silent = true})
-
 -- Set tabs to 2 spaces
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -14,6 +11,10 @@ vim.opt.smarttab = true
 
 -- This maybe is needed in macos?
 vim.opt.ttimeoutlen = 50
+
+-- Always have line numbers
+vim.opt.number = true
+
 
 --
 -- LAZY.NVIM
@@ -37,14 +38,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    {
-      'nvim-telescope/telescope.nvim', tag = '0.1.8',
-       dependencies = { 'nvim-lua/plenary.nvim' }
-    },
-    {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate", lazy = false},
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", lazy = false },
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000, flavor = 'mocha' },
     { 'numToStr/Comment.nvim', opts = {} },
-    { 'JoosepAlviste/nvim-ts-context-commentstring' },
     { 'nmac427/guess-indent.nvim' },
     {
       'saghen/blink.cmp',
@@ -99,7 +95,6 @@ require("lazy").setup({
       },
       opts_extend = { "sources.default" }
     },
-    { 'neovim/nvim-lspconfig' },
     {
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v3.x",
@@ -111,17 +106,6 @@ require("lazy").setup({
       lazy = false, -- neo-tree will lazily load itself
     },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
-    { 'nvimtools/none-ls.nvim' },
-    { 'rebelot/heirline.nvim' },
-    { 'stevearc/resession.nvim' },
-    { "mason-org/mason.nvim", opts = {} },
-    {
-      'windwp/nvim-autopairs',
-      event = "InsertEnter",
-      config = true
-      -- use opts = {} for passing setup options
-      -- this is equivalent to setup({}) function
-    }
   },
   checker = { enabled = true },
 })
@@ -139,32 +123,39 @@ vim.api.nvim_create_autocmd("VimEnter", {
         end
     end,
 })
---
--- END LAZY.NVIM
---
 
+
+--
 -- THEME
+--
 vim.cmd.colorscheme "catppuccin"
 
+
+--
 -- KEYBINDS
+--
+
+-- Neotree toggle.
 vim.keymap.set('n', '<leader>e', ':Neotree toggle=true<CR>')
 
--- Telescope settings
--- Don't enable these when embedded in VS Code though.
-if vim.fn.has 'gui_running' == 0 then
-  local builtin = require('telescope.builtin')
-  vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-  vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-  vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-  vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-end
+-- Double escape to clear searches.
+vim.keymap.set('n', '<Esc><Esc>', '<Esc>:nohlsearch<CR><Esc>', {silent = true})
 
--- Save the session when I leave.
-vim.api.nvim_create_autocmd("VimLeavePre", {
+
+--
+-- AUTOSAVE
+--
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertLeave" }, {
   callback = function()
-    -- Always save a special session named "last"
-    resession.save("last")
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+      -- Remove trailing whitespace.
+      save_cursor = vim.fn.getpos(".")
+      vim.cmd([[%s/\s\+$//e]])
+      vim.fn.setpos(".", save_cursor)
+
+      -- Save.
+      vim.api.nvim_command('silent update')
+    end
   end,
 })
-
 
