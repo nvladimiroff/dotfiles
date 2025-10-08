@@ -15,7 +15,6 @@ vim.opt.ttimeoutlen = 50
 -- Always have line numbers
 vim.opt.number = true
 
-
 --
 -- LAZY.NVIM
 --
@@ -38,10 +37,34 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", lazy = false },
+    -- The only theme anyone ever needs.
     { "catppuccin/nvim", name = "catppuccin", priority = 1000, flavor = 'mocha' },
+
+    -- Better syntax highlighting.
+    {
+      'nvim-treesitter/nvim-treesitter',
+      build = ':TSUpdate',
+      main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+      opts = {
+        auto_install = true,
+        highlight = {
+          enable = true,
+          -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+          --  If you are experiencing weird indenting issues, add the language to
+          --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+          additional_vim_regex_highlighting = { 'ruby' },
+        }
+      },
+    },
+
+    -- Easy comments!
     { 'numToStr/Comment.nvim', opts = {} },
-    { 'nmac427/guess-indent.nvim' },
+
+    -- Do I need this?
+    -- { 'nmac427/guess-indent.nvim' },
+
+    -- Fancy autocomplete.
     {
       'saghen/blink.cmp',
       -- optional: provides snippets for the snippet source
@@ -95,6 +118,8 @@ require("lazy").setup({
       },
       opts_extend = { "sources.default" }
     },
+
+    -- File picker.
     {
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v3.x",
@@ -105,6 +130,14 @@ require("lazy").setup({
       },
       lazy = false, -- neo-tree will lazily load itself
     },
+
+    -- fzf integration.
+    {
+      'nvim-telescope/telescope.nvim',
+      branch = '0.1.x',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
   },
   checker = { enabled = true },
@@ -159,3 +192,12 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertLeave" }, {
   end,
 })
 
+
+--
+-- TELESCOPE
+--
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
