@@ -61,10 +61,8 @@ require("lazy").setup({
     -- Easy comments!
     { 'numToStr/Comment.nvim', opts = {} },
 
-    -- Do I need this?
-    -- { 'nmac427/guess-indent.nvim' },
-
     -- Fancy autocomplete.
+    -- TODO: on the chopping block.
     {
       'saghen/blink.cmp',
       -- optional: provides snippets for the snippet source
@@ -120,6 +118,7 @@ require("lazy").setup({
     },
 
     -- File picker.
+    -- TODO: on the chopping block.
     {
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v3.x",
@@ -138,7 +137,9 @@ require("lazy").setup({
       dependencies = { 'nvim-lua/plenary.nvim' }
     },
 
+    -- More text objects.
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
+    { 'nvim-mini/mini.ai', version = '*', opts = {} },
   },
   checker = { enabled = true },
 })
