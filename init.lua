@@ -41,7 +41,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     -- The only theme anyone ever needs.
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000, flavor = 'mocha' },
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
     -- Better syntax highlighting.
     {
@@ -75,6 +75,11 @@ require("lazy").setup({
         "nvim-tree/nvim-web-devicons", -- optional, but recommended
       },
       lazy = false, -- neo-tree will lazily load itself
+      opts = {
+        window = {
+          width = 30
+        }
+      }
     },
 
     -- fzf integration.
@@ -112,7 +117,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 --
 -- THEME
 --
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme "catppuccin-macchiato"
 
 
 --
