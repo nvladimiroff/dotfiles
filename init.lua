@@ -15,6 +15,9 @@ vim.opt.ttimeoutlen = 50
 -- Always have line numbers
 vim.opt.number = true
 
+-- Keep the sign column there so UI shifting doesn't happen.
+vim.opt.signcolumn = 'yes'
+
 --
 -- LAZY.NVIM
 --
