@@ -125,7 +125,7 @@ vim.cmd.colorscheme "catppuccin-macchiato"
 --
 
 -- Neotree toggle.
-vim.keymap.set('n', '<leader>e', ':Neotree toggle=true<CR><Esc>')
+vim.keymap.set('n', '<leader>e', ':Neotree toggle=true<CR>', { silent = true })
 
 -- Double escape to clear searches.
 vim.keymap.set('n', '<Esc><Esc>', '<Esc>:nohlsearch<CR><Esc>', {silent = true})
