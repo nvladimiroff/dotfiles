@@ -95,6 +95,20 @@ require("lazy").setup({
 
     -- LSP
     { 'neovim/nvim-lspconfig' },
+
+    -- Sessions
+    {
+      "rmagatti/auto-session",
+      lazy = false,
+
+      ---enables autocomplete for opts
+      ---@module "auto-session"
+      ---@type AutoSession.Config
+      opts = {
+        suppressed_dirs = { "~/", "~/code", "~/Downloads", "/" },
+        -- log_level = 'debug',
+      },
+    },
   },
   checker = { enabled = true },
 })
