@@ -109,6 +109,9 @@ require("lazy").setup({
         -- log_level = 'debug',
       },
     },
+
+    -- Smooth scrolling.
+    { 'karb94/neoscroll.nvim', opts = {} },
   },
   checker = { enabled = true },
 })
@@ -153,6 +156,14 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help ta
 
 vim.keymap.set('n', 'J', '<Esc>:bn<CR>', {silent = true})
 vim.keymap.set('n', 'H', '<Esc>:bp<CR>', {silent = true})
+
+-- Smooth scrolling with a mouse.
+vim.keymap.set('n', '<ScrollWheelUp>', '<C-y>')
+vim.keymap.set('n', '<ScrollWheelDown>', '<C-e>')
+vim.keymap.set('i', '<ScrollWheelUp>', '<C-y>')
+vim.keymap.set('i', '<ScrollWheelDown>', '<C-e>')
+vim.keymap.set('v', '<ScrollWheelUp>', '<C-y>')
+vim.keymap.set('v', '<ScrollWheelDown>', '<C-e>')
 
 
 --
