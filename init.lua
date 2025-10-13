@@ -112,6 +112,14 @@ require("lazy").setup({
 
     -- Smooth scrolling.
     { 'karb94/neoscroll.nvim', opts = {} },
+
+    {
+      'NeogitOrg/neogit',
+      dependencies = {
+        "nvim-lua/plenary.nvim",         -- required
+        "sindrets/diffview.nvim",        -- optional - Diff integration
+      },
+    },
   },
   checker = { enabled = true },
 })
@@ -154,8 +162,10 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live gr
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
-vim.keymap.set('n', 'J', '<Esc>:bn<CR>', {silent = true})
-vim.keymap.set('n', 'H', '<Esc>:bp<CR>', {silent = true})
+-- Buffers.
+vim.keymap.set('n', 'J', '<Esc>:bn<CR>', { silent = true })
+vim.keymap.set('n', 'H', '<Esc>:bp<CR>', { silent = true })
+vim.keymap.set('n', '<leader>x', ':bd<CR>', { silent = true })
 
 -- Smooth scrolling with a mouse.
 vim.keymap.set('n', '<ScrollWheelUp>', '<C-y>')
@@ -164,6 +174,9 @@ vim.keymap.set('i', '<ScrollWheelUp>', '<C-y>')
 vim.keymap.set('i', '<ScrollWheelDown>', '<C-e>')
 vim.keymap.set('v', '<ScrollWheelUp>', '<C-y>')
 vim.keymap.set('v', '<ScrollWheelDown>', '<C-e>')
+
+-- Neogit toggle.
+vim.keymap.set('n', '<leader>g', ':Neogit kind=auto<CR>', { silent = true })
 
 
 --
