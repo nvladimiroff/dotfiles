@@ -18,6 +18,11 @@ vim.opt.number = true
 -- Keep the sign column there so UI shifting doesn't happen.
 vim.opt.signcolumn = 'yes'
 
+-- Good lord I'm bad at spelling.
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
+
+
 --
 -- LAZY.NVIM
 --
@@ -163,7 +168,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 -- Buffers.
-vim.keymap.set('n', 'J', '<Esc>:bn<CR>', { silent = true })
+vim.keymap.set('n', 'L', '<Esc>:bn<CR>', { silent = true })
 vim.keymap.set('n', 'H', '<Esc>:bp<CR>', { silent = true })
 vim.keymap.set('n', '<leader>x', ':bd<CR>', { silent = true })
 
