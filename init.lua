@@ -118,13 +118,8 @@ require("lazy").setup({
     -- Smooth scrolling.
     { 'karb94/neoscroll.nvim', opts = {} },
 
-    {
-      'NeogitOrg/neogit',
-      dependencies = {
-        "nvim-lua/plenary.nvim",         -- required
-        "sindrets/diffview.nvim",        -- optional - Diff integration
-      },
-    },
+    -- Better terminal support. I use this solely for the floating terminal.
+    {'akinsho/toggleterm.nvim', version = "*", config = true},
   },
   checker = { enabled = true },
 })
@@ -135,12 +130,12 @@ local function augroup(name)
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
-    group = augroup("autoupdate"),
-    callback = function()
-        if require("lazy.status").has_updates then
-            require("lazy").update({ show = false, })
-        end
-    end,
+  group = augroup("autoupdate"),
+  callback = function()
+    if require("lazy.status").has_updates then
+      require("lazy").update({ show = false, })
+    end
+ end,
 })
 
 
@@ -180,9 +175,39 @@ vim.keymap.set('i', '<ScrollWheelDown>', '<C-e>')
 vim.keymap.set('v', '<ScrollWheelUp>', '<C-y>')
 vim.keymap.set('v', '<ScrollWheelDown>', '<C-e>')
 
--- Neogit toggle.
-vim.keymap.set('n', '<leader>g', ':Neogit kind=auto<CR>', { silent = true })
 
+-- LazyGit toggle.
+local Terminal  = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float' })
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+vim.keymap.set('n', '<leader>g', '<cmd>lua _lazygit_toggle()<CR>', {noremap = true, silent = true})
+
+
+-- Blame
+vim.keymap.set('n', '<leader>b', function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local filename = vim.api.nvim_buf_get_name(bufnr)
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+
+  local blame_info = vim.fn.systemlist('git blame -L ' .. row .. ',+1 ' .. filename .. ' --porcelain')
+  if blame_info[2] ~= nil then
+    local hash = string.sub(blame_info[1], 1, 8)
+    local author_name = string.sub(blame_info[2], 8)
+    local author_date = os.date('%Y %b %d', tonumber(string.sub(blame_info[4], 12)))
+    local summary = string.sub(blame_info[10], 9)
+    print(hash .. " - " .. author_name .. " - " .. author_date .. " - " ..  summary)
+  else
+    print(blame_info[1])
+  end
+end)
+
+-- Toggle terminal
+vim.keymap.set('n', '<leader>t', '<cmd>ToggleTerm dir=git_dir direction=float<CR>', { silent = true })
+vim.keymap.set('t', '<leader>t', '<cmd>ToggleTerm dir=git_dir direction=float<CR>', { silent = true })
 
 --
 -- AUTOSAVE
