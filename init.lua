@@ -209,6 +209,10 @@ end)
 vim.keymap.set('n', '<leader>t', '<cmd>ToggleTerm dir=git_dir direction=float<CR>', { silent = true })
 vim.keymap.set('t', '<leader>t', '<cmd>ToggleTerm dir=git_dir direction=float<CR>', { silent = true })
 
+-- Format JSON.
+vim.keymap.set('n', '<leader>j', "<cmd>%!jq '.'<CR>", { silent = true })
+
+
 --
 -- AUTOSAVE
 --
