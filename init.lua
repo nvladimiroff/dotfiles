@@ -142,7 +142,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 --
 -- THEME
 --
-vim.cmd.colorscheme "catppuccin-macchiato"
+vim.cmd.colorscheme "catppuccin-mocha"
 
 
 --
