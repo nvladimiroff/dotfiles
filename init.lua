@@ -83,11 +83,21 @@ require("lazy").setup({
       opts = {
         window = {
           width = 30
+        },
+        filesystem = {
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = true,
+            hide_gitignored = true,
+            never_show = {
+              '.DS_Store',
+            },
+          }
         }
       }
     },
 
-    -- fzf integration.
+      -- fzf integration.
     {
       'nvim-telescope/telescope.nvim',
       branch = '0.1.x',
