@@ -245,4 +245,39 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertLeave" }, {
 --
 -- LSP
 --
+
+vim.lsp.config('ruby_lsp', {
+  init_options = {
+    enabledFeatures = {
+      codeActions = true,
+      codeLens = true,
+      completion = true,
+      definition = true,
+      diagnostics = true,
+      documentHighlights = true,
+      documentLink = true,
+      documentSymbols = true,
+      foldingRanges = true,
+      formatting = true,
+      hover = true,
+      inlayHint = true,
+      onTypeFormatting = true,
+      selectionRanges = true,
+      semanticHighlighting = true,
+      signatureHelp = true,
+      typeHierarchy = true,
+      workspaceSymbol = true
+    },
+    featuresConfiguration = {
+      inlayHint = {
+        enableAll = true,
+        -- implicitHashValue = false,
+        -- implicitRescue = false
+      }
+    },
+    formatter = 'none',
+    experimentalFeaturesEnabled = false
+  }
+})
 vim.lsp.enable('ruby_lsp')
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { silent = true })
