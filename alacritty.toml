@@ -5,7 +5,7 @@ option_as_alt = "Both"
 
 [font]
 size = 14
-normal = { family = "Monaco Nerd Font Mono", style = "Regular" }
+normal = { family = "Maple Mono NF", style = "Regular" }
 
 
 [keyboard]
