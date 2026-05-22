@@ -1,0 +1,22 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Nick Vladimiroff"
+email = "nick@codeandcake.dev"
+
+[template-aliases]
+"slugify(str)" = '''
+  truncate_end(
+    65,
+    str.first_line()
+      .replace(regex:'[^[[:alnum:]].]', '-')
+      .replace(regex:'-{2,}', '-')
+      .replace(regex:'\.{2,}', '.')
+      .replace(regex:'(^-+|-+$)', '')
+      .lower()
+  )
+'''
+
+[templates]
+git_push_bookmark = '"nv" ++ slugify(description)'
+
